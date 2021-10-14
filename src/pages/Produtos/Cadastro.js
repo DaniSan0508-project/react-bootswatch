@@ -1,4 +1,5 @@
 import React from "react";
+import ProdutoService from "../../app/produtoService";
 
 const initialState = {
     nome:'',
@@ -11,20 +12,36 @@ const initialState = {
 export default class CadastroProduto extends React.Component{
     state = initialState;
 
+    constructor(){
+        super()
+        this.service = new ProdutoService();
+    }
+
     onChange=(event)=>{
         const valor = event.target.value;
         const nomeDoCampo = event.target.name;
         this.setState({[nomeDoCampo]:valor})
     }
 
-    onSubmit = (event) =>{
-        console.log(this.state)
-    }
-
     eraseInput = (event)=>{
         this.setState(initialState)
     }
 
+
+    onSubmit = (event) =>{
+        const produto = {
+            nome: this.state.nome,
+            sku: this.state.sku,
+            descricao: this.state.descricao,
+            preco: this.state.preco,
+            fornecedor: this.state.fornecedor,
+        }
+        this.service.salvar(produto)
+        this.eraseInput()
+        alert('Produto Salvo com sucesso !')
+    }
+
+   
     render(){
         return(
             <div className="card">
