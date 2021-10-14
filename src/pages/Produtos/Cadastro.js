@@ -1,13 +1,15 @@
 import React from "react";
 
+const initialState = {
+    nome:'',
+    sku:'',
+    descricao:'',
+    preco:0,
+    fornecedor:'',
+}
+
 export default class CadastroProduto extends React.Component{
-    state = {
-        nome:'',
-        sku:'',
-        descricao:'',
-        preco:0,
-        fornecedor:'',
-    }
+    state = initialState;
 
     onChange=(event)=>{
         const valor = event.target.value;
@@ -17,6 +19,10 @@ export default class CadastroProduto extends React.Component{
 
     onSubmit = (event) =>{
         console.log(this.state)
+    }
+
+    eraseInput = (event)=>{
+        this.setState(initialState)
     }
 
     render(){
@@ -30,7 +36,7 @@ export default class CadastroProduto extends React.Component{
                         <div className="col-md-6">
                             <div className="form-group">
                                 <label>Nome:</label>
-                                <input name="nome" type="text" value={this.state.nome} className="form-control" onChange={this.onChange}/>
+                                <input name="nome" placeholder="Digite seu nome" type="text" value={this.state.nome} className="form-control" onChange={this.onChange}/>
                             </div>
                         </div>
                         <div className="col-md-6">
@@ -85,7 +91,7 @@ export default class CadastroProduto extends React.Component{
                             <button onClick={this.onSubmit} className="btn btn-danger">Salvar</button>
                         </div>
                         <div className="col-md-1">
-                            <button className="btn btn-primary">Limpar</button>
+                            <button onClick={this.eraseInput} className="btn btn-primary">Limpar</button>
                         </div>
                     </div>
                 </div>
