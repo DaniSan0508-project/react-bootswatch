@@ -7,6 +7,8 @@ const initialState = {
     descricao:'',
     preco:0,
     fornecedor:'',
+    sucesso: false,
+    error: [],
 }
 
 export default class CadastroProduto extends React.Component{
@@ -36,9 +38,15 @@ export default class CadastroProduto extends React.Component{
             preco: this.state.preco,
             fornecedor: this.state.fornecedor,
         }
-        this.service.salvar(produto)
-        this.eraseInput()
-        alert('Produto Salvo com sucesso !')
+        try{
+            this.service.salvar(produto)
+            this.eraseInput()
+            this.setState({ sucesso: true})
+        }catch(Error){
+            const errors = Error.errors
+            this.setState({error:errors})
+        }
+        
     }
 
    
@@ -49,9 +57,34 @@ export default class CadastroProduto extends React.Component{
                     Cadastro de Produtos
                 </div>
                 <div className="card-body">
+
+                    {
+                        this.state.sucesso &&
+                        (
+                            <div className="alert alert-dismissible alert-success">
+                                <button type="button" className="btn-close" data-bs-dismiss="alert"></button>
+                                <strong>Muito Bem!</strong>Cadastro Efetuado com Sucesso
+                            </div>
+                        )
+                    }
+                    {
+                        this.state.error.length > 0 &&
+                            this.state.error.map((err)=>{
+                                return(
+                                    <div className="alert alert-dismissible alert-danger">
+                                        <button type="button" className="btn-close" data-bs-dismiss="alert"></button>
+                                        <strong>Algo deu errado!</strong>{err}
+                                    </div>
+                                )
+                            })
+                    }
+                 
+
                     <div className="row">
                         <div className="col-md-6">
                             <div className="form-group">
+
+                           
                                 <label>Nome:</label>
                                 <input name="nome" placeholder="Digite seu nome" type="text" value={this.state.nome} className="form-control" onChange={this.onChange}/>
                             </div>
