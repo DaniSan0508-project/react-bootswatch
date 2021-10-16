@@ -28,6 +28,15 @@ export default class ProdutoService{
             throw new erroValidacao(errors)
         }
     }
+    deletarProduto = (sku) =>{
+        const index = this.obterIndex(sku)
+        if(index !== null){
+            const produtos = this.obterProdutos()
+            produtos.splice(index,1)
+            localStorage.setItem(PRODUTOS, JSON.stringify(produtos))
+            return produtos
+        }
+    }
 
     obterProdutos = () => {
         const produtos = localStorage.getItem(PRODUTOS)
