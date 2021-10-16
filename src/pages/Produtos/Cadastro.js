@@ -105,7 +105,7 @@ class CadastroProduto extends React.Component{
                                 <label>SKU:</label>
                                 <input 
                                     name="sku" 
-                                    type="text" value={this.state.sku} 
+                                    type="text" value={this.state.sku}
                                     className="form-control" 
                                     onChange={this.onChange}/>
                             </div>
